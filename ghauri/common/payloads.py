@@ -1383,3 +1383,4 @@ TEMPLATE_INJECTED_MESSAGE = """
     Type: {PAYLOAD_TYPE}
     Title: {TITLE}
     Payload: {PAYLOAD}
+"""
