@@ -1,18 +1,5 @@
-[![GitHub release](https://img.shields.io/badge/release-v1.4.1-brightgreen?style=flat-square)](https://github.com/r0oth3x49/ghauri/releases/tag/1.4.1)
-[![GitHub stars](https://img.shields.io/github/stars/r0oth3x49/ghauri?style=flat-square)](https://github.com/r0oth3x49/ghauri/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/r0oth3x49/ghauri?style=flat-square)](https://github.com/r0oth3x49/ghauri/network)
-[![GitHub issues](https://img.shields.io/github/issues/r0oth3x49/ghauri?style=flat-square)](https://github.com/r0oth3x49/ghauri/issues)
-[![GitHub license](https://img.shields.io/github/license/r0oth3x49/ghauri?style=flat-square)](https://github.com/r0oth3x49/ghauri/blob/main/LICENSE)
-
-
-## ***Like Ghauri, consider supporting the developer***
-<a href="https://www.buymeacoffee.com/r0oth3x49" target="_blank"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee"></a> <a href="https://ko-fi.com/r0oth3x49" target="_blank"><img src="https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white"></a>
-
-
-# Ghauri
+# VeldSQL
 **An advanced cross-platform tool that automates the process of detecting and exploiting SQL injection security flaws.**
-
-![ghauri-banner](https://user-images.githubusercontent.com/11024397/193408429-418a75e0-a070-4491-9f92-5799b2509cdf.PNG)
 
 ## ***Requirements***
 
@@ -30,11 +17,11 @@
   
  - Follow this [installation guideline](https://github.com/r0oth3x49/ghauri/issues/119#issuecomment-1873049386) if facing an installation issue.
 
-## ***Download Ghauri***
+## ***Download VeldSQL***
 
 You can download the latest version of Ghauri by cloning the GitHub repository.
 
-    git clone https://github.com/r0oth3x49/ghauri.git
+    git clone https://github.com/epistemophoros/veldsql.git
 
 ## ***Features***
  - Supports following types of injection payloads:
