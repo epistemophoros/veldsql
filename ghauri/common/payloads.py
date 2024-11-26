@@ -1125,12 +1125,6 @@ PAYLOADS = {
                     {"pref": "' ", "suf": "-- wXyW"},
                     {"pref": '" ', "suf": "-- wXyW"},
                     {"pref": ") ", "suf": "-- wXyW"},
-                    {"pref": "') ", "suf": "-- wXy ```
-                "comments": [
-                    {"pref": " ", "suf": "-- wXyW"},
-                    {"pref": "' ", "suf": "-- wXyW"},
-                    {"pref": '" ', "suf": "-- wXyW"},
-                    {"pref": ") ", "suf": "-- wXyW"},
                     {"pref": "') ", "suf": "-- wXyW"},
                     {"pref": '") ', "suf": "-- wXyW"},
                 ],
