@@ -287,47 +287,52 @@ class PrettyTable(object):
         # Check for appropriate length
         if self._field_names:
             try:
-               assert len(val) == len(self._field_names)
+               if len(val) != len(self._field_names):
+                   raise AssertionError
             except AssertionError:
                raise Exception("Field name list has incorrect number of values, (actual) %d!=%d (expected)" % (len(val), len(self._field_names)))
         if self._rows:
             try:
-               assert len(val) == len(self._rows[0])
+               if len(val) != len(self._rows[0]):
+                   raise AssertionError
             except AssertionError:
                raise Exception("Field name list has incorrect number of values, (actual) %d!=%d (expected)" % (len(val), len(self._rows[0])))
         # Check for uniqueness
         try:
-            assert len(val) == len(set(val))
+            if not len(val) == len(set(val)): raise AssertionError
         except AssertionError:
             raise Exception("Field names must be unique!")
 
     def _validate_header_style(self, val):
         try:
-            assert val in ("cap", "title", "upper", "lower", None)
+            if val not in ("cap", "title", "upper", "lower", None):
+                raise AssertionError
         except AssertionError:
             raise Exception("Invalid header style, use cap, title, upper, lower or None!")
 
     def _validate_align(self, val):
         try:
-            assert val in ["l","c","r"]
+            if val not in ["l","c","r"]: raise AssertionError()
         except AssertionError:
             raise Exception("Alignment %s is invalid, use l, c or r!" % val)
 
     def _validate_valign(self, val):
         try:
-            assert val in ["t","m","b",None]
+            if val not in ["t","m","b",None]: raise AssertionError
         except AssertionError:
             raise Exception("Alignment %s is invalid, use t, m, b or None!" % val)
 
     def _validate_nonnegative_int(self, name, val):
         try:
-            assert int(val) >= 0
+            if not int(val) >= 0:
+                raise AssertionError
         except AssertionError:
             raise Exception("Invalid value for %s: %s!" % (name, self._unicode(val)))
 
     def _validate_true_or_false(self, name, val):
         try:
-            assert val in (True, False)
+            if val not in (True, False):
+                raise AssertionError
         except AssertionError:
             raise Exception("Invalid value for %s!  Must be True or False." % name)
 
@@ -336,7 +341,8 @@ class PrettyTable(object):
             return
         try:
             assert type(val) in (str, unicode)
-            assert val.isdigit()
+            if not val.isdigit():
+                raise AssertionError
         except AssertionError:
             raise Exception("Invalid value for %s!  Must be an integer format string." % name)
 
@@ -344,36 +350,40 @@ class PrettyTable(object):
         if val == "":
             return
         try:
-            assert type(val) in (str, unicode)
-            assert "." in val
+            if not type(val) in (str, unicode):
+                raise AssertionError("Value must be a string or unicode")
             bits = val.split(".")
-            assert len(bits) <= 2
-            assert bits[0] == "" or bits[0].isdigit()
-            assert bits[1] == "" or bits[1].isdigit()
+            if not len(bits) <= 2:
+                raise AssertionError("Value must have at most one decimal point")
+            if not (bits[0] == "" or bits[0].isdigit()) or not (bits[1] == "" or bits[1].isdigit()):
         except AssertionError:
             raise Exception("Invalid value for %s!  Must be a float format string." % name)
 
     def _validate_function(self, name, val):
         try:
-            assert hasattr(val, "__call__")
+            if not hasattr(val, "__call__"):
+                raise AssertionError
         except AssertionError:
             raise Exception("Invalid value for %s!  Must be a function." % name)
 
     def _validate_hrules(self, name, val):
         try:
-            assert val in (ALL, FRAME, HEADER, NONE)
+            if val not in (ALL, FRAME, HEADER, NONE):
+                raise AssertionError
         except AssertionError:
             raise Exception("Invalid value for %s!  Must be ALL, FRAME, HEADER or NONE." % name)
 
     def _validate_vrules(self, name, val):
         try:
-            assert val in (ALL, FRAME, NONE)
+            if val not in (ALL, FRAME, NONE):
+                raise AssertionError
         except AssertionError:
             raise Exception("Invalid value for %s!  Must be ALL, FRAME, or NONE." % name)
 
     def _validate_field_name(self, name, val):
         try:
-            assert (val in self._field_names) or (val is None)
+            if not ((val in self._field_names) or (val is None)):
+                raise AssertionError
         except AssertionError:
             raise Exception("Invalid field name: %s!" % val)
 
@@ -386,13 +396,15 @@ class PrettyTable(object):
 
     def _validate_single_char(self, name, val):
         try:
-            assert _str_block_width(val) == 1
+            if _str_block_width(val) != 1:
+                raise AssertionError
         except AssertionError:
             raise Exception("Invalid value for %s!  Must be a string of length 1." % name)
 
     def _validate_attributes(self, name, val):
         try:
-            assert isinstance(val, dict)
+            if not isinstance(val, dict):
+                raise AssertionError
         except AssertionError:
             raise Exception("attributes must be a dictionary of name/value pairs!")
 
@@ -1445,7 +1457,7 @@ def from_html_one(html_code, **kwargs):
 
     tables = from_html(html_code, **kwargs)
     try:
-        assert len(tables) == 1
+        if len(tables) != 1: raise AssertionError
     except AssertionError:
         raise Exception("More than one <table> in provided HTML code!  Use from_html instead.")
     return tables[0]
